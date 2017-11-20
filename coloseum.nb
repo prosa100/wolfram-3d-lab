@@ -10,73 +10,114 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      3205,        103]
-NotebookOptionsPosition[      2375,         77]
-NotebookOutlinePosition[      2717,         92]
-CellTagsIndexPosition[      2674,         89]
+NotebookDataLength[      4865,        146]
+NotebookOptionsPosition[      3996,        118]
+NotebookOutlinePosition[      4340,        133]
+CellTagsIndexPosition[      4297,        130]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"tris", "=", 
+   RowBox[{"Import", "[", 
+    RowBox[{"\"\<coloseum.ply\>\"", ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<PLY\>\"", ",", "\"\<PolygonObjects\>\""}], "}"}]}], 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.720148746301474*^9, 3.7201487997024765`*^9}, {
+  3.7201491925325127`*^9, 
+  3.720149197600561*^9}},ExpressionUUID->"86649957-683b-4d73-a35b-\
+459e5e6d884e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"voxelsPerM", "=", 
+   RowBox[{"2", "^", "5"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7201499993103285`*^9, 
+  3.7201500107953253`*^9}},ExpressionUUID->"285c1e55-9699-4934-b277-\
+c1e5e9cf4375"],
 
 Cell[CellGroupData[{
+
 Cell[BoxData[{
- RowBox[{"Quantity", "[", 
+ RowBox[{
   RowBox[{
+   RowBox[{"{", 
+    RowBox[{"minPos", ",", "maxPos"}], "}"}], "=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{"MinMax", "/@", 
+     RowBox[{"Transpose", "[", "points", "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"size", "=", 
+   RowBox[{"maxPos", "-", "minPos"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"modelToVoxelTransform", "=", 
    RowBox[{
-    RowBox[{"1024", "^", "2"}], "*", "100", "*", 
-    RowBox[{
-     RowBox[{"(", 
-      RowBox[{"2", "^", "5"}], ")"}], "^", "3"}]}], ",", "\"\<Bytes\>\""}], 
-  "]"}], "\[IndentingNewLine]", 
- RowBox[{"N", "@", 
-  RowBox[{"UnitConvert", "[", 
-   RowBox[{"%", ",", "\"\<Gigabytes\>\""}], "]"}]}]}], "Input",
- CellChangeTimes->{{3.7201484372095966`*^9, 3.7201485157863746`*^9}, {
-  3.720148562306501*^9, 3.720148576805259*^9}, {3.7201486339562645`*^9, 
-  3.7201486554942985`*^9}},ExpressionUUID->"15100e46-b35e-4406-8609-\
-f9c5e4f56c2e"],
+    RowBox[{"RotationTransform", "[", 
+     RowBox[{
+      RowBox[{"90", " ", "Degree"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "0", ",", "0"}], "}"}]}], "]"}], "@*", 
+    RowBox[{"TranslationTransform", "[", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1", ",", "1"}], "}"}], "]"}], "@*", 
+    RowBox[{"ScalingTransform", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", "1", ",", "1"}], "}"}], "voxelsPerM"}], "]"}], "@*", 
+    RowBox[{"TranslationTransform", "[", 
+     RowBox[{"-", "minPos"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"rtris", "=", 
+   RowBox[{"tris", "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rtris", "=", 
+    RowBox[{"Map", "[", 
+     RowBox[{"modelToVoxelTransform", ",", "rtris", ",", 
+      RowBox[{"{", "2", "}"}]}], "]"}]}], ";"}], "//", 
+  "AbsoluteTiming"}]}], "Input",
+ CellChangeTimes->{{3.7201497929472265`*^9, 3.7201499698903255`*^9}, {
+   3.720150030792325*^9, 3.7201500629473267`*^9}, {3.7201501155615544`*^9, 
+   3.720150119219554*^9}, {3.7201503626918087`*^9, 3.7201503832983246`*^9}, 
+   3.7201504813873253`*^9, {3.720150579251086*^9, 3.7201506282981052`*^9}, {
+   3.720150675768141*^9, 3.720150678303141*^9}, {3.720150742307108*^9, 
+   3.720150742795108*^9}, {3.720150797747199*^9, 3.7201508135451984`*^9}, {
+   3.7201508680638614`*^9, 3.7201509325595665`*^9}, 3.7201509792597094`*^9, {
+   3.720151106222651*^9, 3.720151108988652*^9}, {3.72015127200723*^9, 
+   3.720151272409231*^9}},ExpressionUUID->"7962b97c-37cb-4af8-8504-\
+ba275712ef3a"],
 
-Cell[BoxData[
- TemplateBox[{"3435973836800","\"B\"","bytes","\"Bytes\""},
-  "Quantity"]], "Output",
- CellChangeTimes->{{3.720148644576293*^9, 
-  3.720148656317261*^9}},ExpressionUUID->"8fd56673-69f7-47ed-9cf1-\
-c3f0bf622d06"],
-
-Cell[BoxData[
- TemplateBox[{"3435.9738368`","\"GB\"","gigabytes","\"Gigabytes\""},
-  "Quantity"]], "Output",
- CellChangeTimes->{{3.720148644576293*^9, 
-  3.7201486563202615`*^9}},ExpressionUUID->"821fb8e9-f379-4f3f-af67-\
-007d1aea7abd"]
+Cell[BoxData["$Aborted"], "Output",
+ CellChangeTimes->{{3.720150920456571*^9, 3.7201509338185863`*^9}, 
+   3.720150985627123*^9, 
+   3.7201512667022285`*^9},ExpressionUUID->"9b50545b-b9ac-4428-a962-\
+def0a7686724"]
 }, Open  ]],
 
-Cell[BoxData[
- RowBox[{"SetDirectory", "["}]], "Input",
- CellChangeTimes->{{3.720148805220522*^9, 3.720148809653477*^9}, {
-  3.7201489182034845`*^9, 
-  3.72014892516848*^9}},ExpressionUUID->"f7334af1-a0ba-4d70-9ab3-\
-4a8890ae436e"],
-
-Cell[BoxData[""], "Input",
- CellChangeTimes->{{3.7201487332184763`*^9, 
-  3.720148734628475*^9}},ExpressionUUID->"616581d3-2005-43bb-b816-\
-9a4ef72f8be4"],
+Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"tris", "=", 
-  RowBox[{"Import", "[", 
-   RowBox[{",", 
-    RowBox[{"{", 
-     RowBox[{"\"\<PLY\>\"", ",", "\"\<PolygonObjects\>\""}], "}"}]}], 
-   "]"}]}]], "Input",
- CellChangeTimes->{{3.720148746301474*^9, 
-  3.7201487997024765`*^9}},ExpressionUUID->"86649957-683b-4d73-a35b-\
-459e5e6d884e"]
+ RowBox[{"Log2", "[", 
+  RowBox[{"Times", "@@", 
+   RowBox[{"(", 
+    RowBox[{"size", "*", "voxelsPerM"}], ")"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.720151439671685*^9, 
+  3.720151485090687*^9}},ExpressionUUID->"958831b8-1327-466f-94f7-\
+884988ae584f"],
+
+Cell[BoxData["42.10825745597789`"], "Output",
+ CellChangeTimes->{{3.720151441146728*^9, 3.7201514856287255`*^9}, 
+   3.720151526571731*^9},ExpressionUUID->"05fe6cc5-0680-4bef-95a1-\
+01e2e7ff93a4"]
+}, Open  ]]
 },
-WindowSize->{958, 988},
-WindowMargins->{{Automatic, -7}, {Automatic, 0}},
+WindowSize->{1920, 997},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
 FrontEndVersion->"11.1 for Microsoft Windows (64-bit) (April 18, 2017)",
 StyleDefinitions->"Default.nb"
 ]
@@ -91,20 +132,22 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
+Cell[558, 20, 416, 11, 30, "Input", "ExpressionUUID" -> \
+"86649957-683b-4d73-a35b-459e5e6d884e"],
+Cell[977, 33, 230, 6, 30, "Input", "ExpressionUUID" -> \
+"285c1e55-9699-4934-b277-c1e5e9cf4375"],
 Cell[CellGroupData[{
-Cell[580, 22, 600, 15, 50, "Input", "ExpressionUUID" -> \
-"15100e46-b35e-4406-8609-f9c5e4f56c2e"],
-Cell[1183, 39, 225, 5, 38, "Output", "ExpressionUUID" -> \
-"8fd56673-69f7-47ed-9cf1-c3f0bf622d06"],
-Cell[1411, 46, 236, 5, 38, "Output", "ExpressionUUID" -> \
-"821fb8e9-f379-4f3f-af67-007d1aea7abd"]
+Cell[1232, 43, 2023, 49, 107, "Input", "ExpressionUUID" -> \
+"7962b97c-37cb-4af8-8504-ba275712ef3a"],
+Cell[3258, 94, 214, 4, 30, "Output", "ExpressionUUID" -> \
+"9b50545b-b9ac-4428-a962-def0a7686724"]
 }, Open  ]],
-Cell[1662, 54, 231, 5, 30, "Input", "ExpressionUUID" -> \
-"f7334af1-a0ba-4d70-9ab3-4a8890ae436e"],
-Cell[1896, 61, 154, 3, 30, "Input", "ExpressionUUID" -> \
-"616581d3-2005-43bb-b816-9a4ef72f8be4"],
-Cell[2053, 66, 318, 9, 30, "Input", "ExpressionUUID" -> \
-"86649957-683b-4d73-a35b-459e5e6d884e"]
+Cell[CellGroupData[{
+Cell[3509, 103, 272, 7, 30, "Input", "ExpressionUUID" -> \
+"958831b8-1327-466f-94f7-884988ae584f"],
+Cell[3784, 112, 196, 3, 63, "Output", "ExpressionUUID" -> \
+"05fe6cc5-0680-4bef-95a1-01e2e7ff93a4"]
+}, Open  ]]
 }
 ]
 *)
