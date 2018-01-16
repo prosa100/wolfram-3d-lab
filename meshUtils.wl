@@ -1,12 +1,8 @@
 (* ::Package:: *)
 
-BeginPackage[ "MeshUtils`"];
-
 MeshGenus::usage = "Compute Mesh Genus";
 
 MeshGenus::meshRegion="Mesh regions have internal edges and stuff. If you get a odd Genus, that's why.";
-
-Begin["`Private`"];
 
 MeshGenus[mesh_BoundaryMeshRegion]:=Module[{numVerts,numEdges,numfaces },
 {numVerts,numEdges,numfaces}=Take[MeshCellCount[mesh],3];
@@ -20,7 +16,3 @@ Message[MeshGenus::meshRegion];
 ]
 
 MeshGenus[_]:=$Failed
-
-End[];
-
-EndPackage[];
